@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.19'
+    }
+}
+
+plugins {
+    id 'com.google.protobuf' version '0.8.19'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group 'org.stickerbot'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    implementation 'com.google.protobuf:protobuf-java:3.21.4'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.21.4'
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.stickersbot'
+            artifactId = 'telegram-stickers-bot-protobuf'
+            version = '1.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
